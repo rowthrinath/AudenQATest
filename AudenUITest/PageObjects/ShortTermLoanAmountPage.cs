@@ -1,7 +1,9 @@
 using System;
 using System.Threading;
+using AudenQATest.Common;
 using AudenQATest.Common.Components;
 using AudenQATest.Context;
+using AudenUITest.Enums;
 using Microsoft.VisualBasic.CompilerServices;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
@@ -21,8 +23,8 @@ namespace AudenUITest.PageObjects
 
         public By RepaymentDate1 => By.CssSelector(
             "#root > div > div > div:nth-child(1) > div > div.right-wrapper > div.loan-calculator > section.loan-schedule.loan-schedule-wrapper-2VcYozN-sC > div > div.loan-schedule__tab__panel__detail > span.loan-schedule__tab__panel__detail__tag ");
-        public By RepaymentDate2 => By.CssSelector(
-            "#root > div > div > div:nth-child(1) > div > div.right-wrapper > div.loan-calculator > section.loan-schedule.loan-schedule-wrapper-2VcYozN-sC > div > div.loan-schedule__tab__panel__detail > span.loan-schedule__tab__panel__detail__tag > label:nth-child(2)");
+        public By RepaymentSection => By.CssSelector(
+            "#root > div > div > div:nth-child(1) > div > div.right-wrapper > div.loan-calculator > section.loan-schedule.loan-schedule-wrapper-2VcYozN-sC > div > div.loan-schedule__tab__panel__detail > span.loan-schedule__tab__panel__detail__tag > label:nth-child(1) > span");
         private IWebElement _loanSlider;
         
         public ShortTermLoanAmountPage(BrowserContext browserContext)
@@ -31,7 +33,7 @@ namespace AudenUITest.PageObjects
         }
         public void SelectLoanAmountInSlider(decimal loanAmount)
         {
-            Thread.Sleep(5000);
+            DriverMethods.WaitForElementToBeVisible(_browserContext.WebDriver, LoanSelectorSlider, (int) TimeOut.Duration);
             _loanSlider = _browserContext.WebDriver.FindElement(LoanSelectorSlider);
             var pixel = Slider.GetPixelsToMove(_loanSlider, loanAmount, 500, 200);
             Actions action = new Actions(_browserContext.WebDriver);
@@ -42,6 +44,7 @@ namespace AudenUITest.PageObjects
 
         public void SelectRepaymentDate(int dateToSelect)
         {
+            DriverMethods.WaitForElementToBeVisible(_browserContext.WebDriver, RepaymentDayGrid, (int) TimeOut.Duration);
             var repaymentGrid = _browserContext.WebDriver.FindElements(RepaymentDayGrid);
             foreach (var date in repaymentGrid)
             {

@@ -17,5 +17,6 @@ Scenario: To verify the min and max ammounts of loan on slider
            Then I can see the minimum amount to be 500
            
 Scenario: To verify that weekend cannot be a repayment day
-          When I select a weekend as the repayment date 9
+          When I select 210 loan amount using the slider
+          And I select a weekend as the repayment date 9
           Then I shouild see the first repayment day option be pushed back to the last working day

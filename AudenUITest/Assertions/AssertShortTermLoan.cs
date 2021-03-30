@@ -1,6 +1,9 @@
 using System;
 using System.Linq;
+using System.Threading;
+using AudenQATest.Common;
 using AudenQATest.Context;
+using AudenUITest.Enums;
 using AudenUITest.PageObjects;
 using Microsoft.VisualBasic;
 using Xunit;
@@ -19,6 +22,7 @@ namespace AudenUITest.Assertions
         
         public void CompareSliderAmountAndLoanSectionAmount()
         {
+            DriverMethods.WaitForElementToBeVisible(_browserContext.WebDriver, _shortTermLoanAmountPage.LoanDisplaySection, (int) TimeOut.Duration);
             var loanAmountSection = $"{_browserContext.WebDriver.FindElement(_shortTermLoanAmountPage.LoanDisplaySection).Text}00";
             var sliderSelectionAmount = _browserContext.WebDriver
                 .FindElement(_shortTermLoanAmountPage.SelectedSliderLoanAmount).Text;
@@ -27,6 +31,7 @@ namespace AudenUITest.Assertions
 
         public void VerifyIfTheSelectedAmountInSliderMatchesInSections(decimal amountToCheck)
         {
+            DriverMethods.WaitForElementToBeVisible(_browserContext.WebDriver, _shortTermLoanAmountPage.LoanDisplaySection, (int) TimeOut.Duration);
             var loanAmountSection = 
                 Strings.Replace($"{_browserContext.WebDriver.FindElement(_shortTermLoanAmountPage.LoanDisplaySection).Text}00","£", "");
             var sliderSelectionAmount = _browserContext.WebDriver
@@ -37,12 +42,14 @@ namespace AudenUITest.Assertions
 
         public void CheckToSeeIfLoanSectionHasValue()
         {
+            DriverMethods.WaitForElementToBeVisible(_browserContext.WebDriver, _shortTermLoanAmountPage.LoanDisplaySection, (int) TimeOut.Duration);
             var loanAmount = _browserContext.WebDriver.FindElement(_shortTermLoanAmountPage.LoanDisplaySection).Text;
             Assert.NotEmpty(loanAmount);
         }
 
         public void VerifyFirstRepaymentDate(int dateToCheck)
         {
+            DriverMethods.WaitForElementToBeVisible(_browserContext.WebDriver, _shortTermLoanAmountPage.LoanDisplaySection, (int) TimeOut.Duration);
             var firstRepayment = _browserContext.WebDriver.FindElement(_shortTermLoanAmountPage.RepaymentDate1).Text;
             var result =  firstRepayment.Contains( dateToCheck.ToString());
             Assert.True(result);

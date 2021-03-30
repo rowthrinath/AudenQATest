@@ -15,6 +15,12 @@ namespace AudenQATest.Common
             };
 
         }
+
+        public static bool WaitForElementToBeVisible(this IWebDriver webDriver, By by, int timeoutInSeconds)
+        {
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(timeoutInSeconds));
+            return wait.Until(drv => drv.FindElement(by).Enabled);
+        }
     }
 }
 
